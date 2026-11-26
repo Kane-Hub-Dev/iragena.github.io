@@ -339,7 +339,7 @@ img, video { display: block; max-width: 100%; }
   .quality-card-wide { grid-column: span 2; }
   .wishes-grid { grid-template-columns: repeat(3,minmax(0,1fr)); }
 }
-@media (max-width: 760px) {
+@media (max-width: 860px) {
   html { scroll-padding-top: 74px; }
   .section-shell, .header-inner { width: calc(100% - 34px); }
   .header-inner { height: 66px; }
@@ -459,7 +459,7 @@ img, video { display: block; max-width: 100%; }
 .music-button { min-height: 42px; }
 .button, .menu-toggle, .lightbox-close, .lightbox-arrow { touch-action: manipulation; }
 
-@media (max-width: 760px) {
+@media (max-width: 860px) {
   .header-inner { gap: 9px; }
   .brand { min-width: 0; gap: 9px; }
   .header-actions { gap: 7px; }
@@ -484,4 +484,84 @@ img, video { display: block; max-width: 100%; }
 @media (prefers-reduced-motion: reduce) {
   .brand-mark > i, .birthday-sticker-cake, .birthday-sticker-love, .birthday-sticker-balloon, .personal-note-sticker { animation: none !important; }
   .sticker-shower-piece { display: none !important; }
+}
+
+/* FINAL PHONE WIDTH + ORIGINAL PHOTO QUALITY FIX */
+html, body { width:100%; max-width:100%; min-width:0; overflow-x:clip; }
+body { min-height:100%; }
+main, header, footer, section, article, aside, figure, nav, .section-shell,
+.header-inner, .hero, .hero-copy, .hero-visual, .content-section,
+.qualities-section, .scripture-inner, .prayer-section, .memories-section,
+.gallery-grid, .video-feature, .wishes-section, .surprise-section,
+.dedication-inner { min-width:0; }
+img, video { max-width:100%; }
+
+/* Use every supplied JPEG at full resolution; do not crop or re-encode. */
+.hero-portrait img, .gallery-item img {
+  object-fit:contain;
+  object-position:center;
+}
+.gallery-item { background:#111a28; }
+.hero-portrait { background:#9d9b9a; }
+
+@media (max-width: 860px) {
+  .section-shell { width:calc(100% - 28px); max-width:100%; }
+  .header-inner { width:calc(100% - 24px); max-width:100%; gap:7px; }
+  .header-actions { min-width:0; flex:0 1 auto; gap:6px; }
+  .brand { min-width:0; flex:0 1 auto; gap:7px; }
+  .brand-copy { min-width:0; }
+  .brand-copy strong { white-space:nowrap; }
+  .brand-copy small { font-size:7px; letter-spacing:.13em; }
+  .music-button { flex:0 1 auto; min-width:0; max-width:46vw; white-space:nowrap; padding-inline:8px; gap:5px; }
+  .music-button #musicLabel { overflow:hidden; text-overflow:ellipsis; }
+  .menu-toggle { display:block; flex:0 0 38px; }
+  .desktop-nav { display:none; }
+  .mobile-nav { position:absolute; display:flex; flex-direction:column; gap:4px; top:66px; left:0; right:0; padding:10px 17px 17px; background:rgba(9,14,25,.97); border-bottom:1px solid rgba(255,255,255,.08); box-shadow:0 17px 35px rgba(0,0,0,.3); backdrop-filter:blur(20px); }
+  .mobile-nav[hidden] { display:none; }
+  .hero { width:calc(100% - 28px); max-width:100%; min-height:auto; display:flex; flex-direction:column; align-items:stretch; gap:18px; padding-top:38px; padding-bottom:80px; }
+  .hero-copy, .hero-visual { width:100%; max-width:100%; }
+  .hero-copy { order:1; }
+  .hero-visual { order:2; align-self:center; min-height:430px; overflow:visible; }
+  .hero-portrait { width:min(76%,300px); height:410px; max-width:calc(100% - 78px); }
+  .hero-portrait img { object-fit:contain; }
+  .date-seal { right:0; }
+  .floating-note { left:2px; max-width:calc(100% - 8px); }
+  .birthday-sticker-cake { left:2px; max-width:calc(100% - 8px); }
+  .birthday-sticker-love { right:2px; }
+  .birthday-sticker-balloon { right:12%; }
+  .gallery-grid { width:100%; grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .gallery-item, .gallery-item:nth-child(n) { min-width:0; width:100%; }
+  .video-feature, .video-frame { width:100%; min-width:0; }
+  .video-frame video { width:auto; max-width:100%; }
+  .memory-facts { grid-template-columns:repeat(3,minmax(0,1fr)); }
+  .memory-facts div, .wish-card { min-width:0; }
+  .wishes-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .personal-heart-note { width:100%; min-width:0; overflow-wrap:anywhere; }
+  .personal-heart-note p, .original-signature, .dedication-inner h2 { overflow-wrap:anywhere; }
+  .footer-bottom { width:100%; min-width:0; }
+}
+@media (max-width: 420px) {
+  .header-inner { width:calc(100% - 18px); gap:5px; }
+  .brand { gap:6px; }
+  .brand-mark { flex-basis:36px; width:36px; height:36px; }
+  .brand-copy strong { font-size:14px; }
+  .music-button { max-width:42vw; padding-inline:7px; font-size:8px; }
+  .menu-toggle { width:36px; height:36px; flex-basis:36px; }
+  .hero h1 { font-size:clamp(52px,15.5vw,65px); }
+  .hero-visual { min-height:405px; }
+  .hero-portrait { height:385px; max-width:calc(100% - 70px); }
+  .birthday-sticker-cake { gap:4px; padding:6px 7px; }
+  .birthday-sticker-copy strong { font-size:6px; }
+  .birthday-sticker-copy small { font-size:5px; }
+  .birthday-sticker-love { min-width:62px; min-height:38px; font-size:16px; }
+  .gallery-item, .gallery-item:nth-child(n) { height:220px; }
+  .gallery-item:first-child { height:315px; }
+  .wish-card { padding-inline:10px; }
+  .wish-card p { overflow-wrap:anywhere; }
+}
+@media (max-width: 340px) {
+  .music-button { max-width:39vw; }
+  .brand-copy small { display:none; }
+  .section-heading h2, .prayer-card h2 { font-size:clamp(35px,11vw,42px); }
+  .hero-portrait { max-width:calc(100% - 60px); }
 }

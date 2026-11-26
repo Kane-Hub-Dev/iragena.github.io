@@ -6,7 +6,7 @@ A mobile-first, single-page birthday website dedicated to Ishimwe Diane (Dira). 
 
 - One continuous responsive page (not multiple pages)
 - Personalized birthday hero, letter, qualities, Bible passages, prayer, memories, wishes, surprise reveal and final dedication
-- Five supplied photos optimized as WebP without changing the people or scenes
+- Five supplied original JPEG photographs, kept at their original resolution and without resizing or re-encoding
 - Supplied portrait MP4 video with native play/pause controls
 - Photo gallery with keyboard-accessible lightbox, previous/next controls and captions
 - Scroll reveal animations, reading progress indicator, mobile navigation and interactive birthday details
@@ -25,11 +25,11 @@ Dira-Birthday/
 └── assets/
     ├── favicon.svg
     ├── images/
-    │   ├── dira-portrait-01.webp
-    │   ├── dira-portrait-02.webp
-    │   ├── dira-portrait-03.webp
-    │   ├── dira-portrait-04.webp
-    │   └── dira-portrait-05.webp
+    │   ├── dira-photo-01-studio.jpg
+    │   ├── dira-photo-02-garden.jpg
+    │   ├── dira-photo-03-orange-shirt.jpg
+    │   ├── dira-photo-04-cap.jpg
+    │   └── dira-photo-05-blue-shirt.jpg
     ├── videos/
     │   └── dira-memory-video.mp4
     └── audio/
