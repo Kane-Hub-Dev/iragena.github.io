@@ -11,6 +11,7 @@ A mobile-first, single-page birthday website dedicated to Ishimwe Diane (Dira). 
 - Photo gallery with keyboard-accessible lightbox, previous/next controls and captions
 - Scroll reveal animations, reading progress indicator, mobile navigation and interactive birthday details
 - Supplied birthday song with a visitor-controlled play/pause button (no autoplay)
+- GitHub Pages fallback that rebuilds the supplied song from 13 small text assets when the MP3 binary is unavailable
 - Reduced-motion and keyboard-focus support
 
 ## Project structure
