@@ -430,3 +430,58 @@ img, video { display: block; max-width: 100%; }
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
   .reveal { opacity: 1; transform: none; }
 }
+
+
+/* Dira birthday upgrade: a little extra sparkle, movement and phone comfort */
+.brand-mark { isolation: isolate; flex: 0 0 42px; overflow: visible; }
+.brand-mark > span { position: relative; z-index: 1; transform: translateY(1px); }
+.brand-mark > i { position: absolute; top: -5px; right: -4px; display: grid; place-items: center; width: 17px; height: 17px; border: 1px solid rgba(255,255,255,.5); border-radius: 50%; color: #fff8e9; background: linear-gradient(145deg, #d98c7f, #a95e76); font: 10px/1 var(--sans); font-style: normal; box-shadow: 0 3px 10px rgba(0,0,0,.25); animation: logoSpark 2.6s ease-in-out infinite; }
+.brand-mark > b { position: absolute; right: 4px; bottom: 3px; color: #9d4f62; font: 700 10px/1 var(--sans); text-shadow: 0 1px 0 rgba(255,255,255,.45); }
+@keyframes logoSpark { 0%,100% { transform: scale(.9) rotate(-9deg); } 50% { transform: scale(1.13) rotate(12deg); } }
+.birthday-sticker { position: absolute; z-index: 6; display: flex; align-items: center; gap: 8px; border: 1px solid rgba(255,243,221,.62); box-shadow: 0 12px 36px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.65); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); pointer-events: none; }
+.birthday-sticker-cake { top: 34px; left: 1%; padding: 8px 12px 8px 9px; border-radius: 15px 15px 15px 5px; color: #412b2a; background: linear-gradient(135deg, rgba(255,240,211,.97), rgba(244,203,167,.94)); transform: rotate(-7deg); animation: stickerBob 4.2s ease-in-out infinite; }
+.birthday-sticker-emoji { font-size: 27px; line-height: 1; filter: drop-shadow(0 3px 4px rgba(92,42,39,.16)); }
+.birthday-sticker-copy { display: flex; flex-direction: column; gap: 2px; }
+.birthday-sticker-copy strong { color: #75403e; font-size: 8px; font-weight: 950; letter-spacing: .11em; white-space: nowrap; }
+.birthday-sticker-copy small { color: #976d5f; font-size: 7px; font-weight: 850; letter-spacing: .1em; white-space: nowrap; }
+.birthday-sticker-love { right: 3%; bottom: 53px; min-width: 78px; min-height: 48px; justify-content: center; padding: 7px 12px; border-radius: 15px 15px 5px 15px; color: #8c435e; background: linear-gradient(135deg, rgba(255,236,241,.97), rgba(249,204,217,.94)); font-size: 21px; transform: rotate(7deg); animation: stickerBob 3.7s ease-in-out infinite reverse; }
+.birthday-sticker-balloon { position: absolute; z-index: 5; top: 2px; right: 17%; font-size: 30px; filter: drop-shadow(0 6px 10px rgba(0,0,0,.18)); animation: balloonDrift 5s ease-in-out infinite; pointer-events: none; }
+@keyframes stickerBob { 0%,100% { translate: 0 0; } 50% { translate: 0 -9px; } }
+@keyframes balloonDrift { 0%,100% { transform: translateY(2px) rotate(-8deg); } 50% { transform: translateY(-12px) rotate(7deg); } }
+.personal-heart-note { position: relative; max-width: 650px; margin: 25px auto 0; padding: 25px clamp(18px,4vw,36px) 22px; border: 1px solid rgba(242,195,110,.3); border-radius: 22px 22px 22px 7px; background: linear-gradient(135deg, rgba(242,195,110,.11), rgba(217,140,127,.1) 55%, rgba(102,203,208,.08)); box-shadow: 0 18px 55px rgba(0,0,0,.23), inset 0 1px 0 rgba(255,255,255,.06); }
+.personal-heart-note::before { content: ""; position: absolute; inset: 7px; border: 1px dashed rgba(255,224,160,.17); border-radius: 16px 16px 16px 4px; pointer-events: none; }
+.personal-heart-note p { position: relative; z-index: 1; max-width: 560px; margin: 14px auto 0; color: #ffe7c2; font: italic clamp(16px,2.4vw,21px)/1.7 var(--serif); text-wrap: pretty; }
+.personal-note-sticker { position: relative; z-index: 1; display: inline-grid; place-items: center; min-width: 55px; min-height: 34px; padding: 4px 12px; border: 1px solid rgba(255,255,255,.25); border-radius: 99px; color: #fff; background: linear-gradient(120deg, rgba(217,140,127,.32), rgba(185,117,130,.24)); font-size: 17px; box-shadow: 0 4px 18px rgba(0,0,0,.14); animation: stickerBob 3.8s ease-in-out infinite; }
+.sender-line { margin: 17px 0 0; color: #d3c1ad; font: italic 14px/1.6 var(--serif); }
+.sender-line strong { color: var(--gold-bright); font-weight: 700; }
+.sticker-shower-piece { position: fixed; z-index: 145; top: -40px; left: 0; pointer-events: none; font-size: var(--sticker-size, 22px); line-height: 1; filter: drop-shadow(0 4px 8px rgba(0,0,0,.2)); animation: stickerShower var(--sticker-duration, 3.5s) ease-in forwards; }
+@keyframes stickerShower { 0% { opacity: 0; transform: translate3d(0,0,0) rotate(-18deg) scale(.65); } 12% { opacity: 1; } 100% { opacity: 0; transform: translate3d(var(--sticker-drift, 24px), 108vh, 0) rotate(var(--sticker-spin, 250deg)) scale(1.1); } }
+.music-button { min-height: 42px; }
+.button, .menu-toggle, .lightbox-close, .lightbox-arrow { touch-action: manipulation; }
+
+@media (max-width: 760px) {
+  .header-inner { gap: 9px; }
+  .brand { min-width: 0; gap: 9px; }
+  .header-actions { gap: 7px; }
+  .music-button { min-height: 42px; gap: 6px; padding: 8px 10px; font-size: 9px; }
+  .birthday-sticker-cake { top: 25px; left: 0; gap: 6px; padding: 7px 9px 7px 7px; }
+  .birthday-sticker-emoji { font-size: 23px; }
+  .birthday-sticker-copy strong { font-size: 7px; }
+  .birthday-sticker-copy small { font-size: 6px; }
+  .birthday-sticker-love { right: 1%; bottom: 46px; min-width: 69px; min-height: 42px; font-size: 18px; }
+  .birthday-sticker-balloon { top: 7px; right: 10%; font-size: 25px; }
+  .personal-heart-note { margin-top: 23px; padding: 22px 17px 19px; border-radius: 18px 18px 18px 6px; }
+  .personal-heart-note p { font-size: 16px; line-height: 1.65; }
+  .sender-line { font-size: 13px; }
+}
+@media (max-width: 420px) {
+  .brand-mark { flex-basis: 38px; }
+  .birthday-sticker-cake { top: 22px; left: -1px; }
+  .birthday-sticker-balloon { right: 7%; font-size: 22px; }
+  .birthday-sticker-love { right: 0; bottom: 38px; }
+  .personal-heart-note p { font-size: 15px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .brand-mark > i, .birthday-sticker-cake, .birthday-sticker-love, .birthday-sticker-balloon, .personal-note-sticker { animation: none !important; }
+  .sticker-shower-piece { display: none !important; }
+}
