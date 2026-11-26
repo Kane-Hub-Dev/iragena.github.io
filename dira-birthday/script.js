@@ -57,8 +57,28 @@ function showToast(message) {
 }
 
 // Open your gift: scroll to the letter and scatter a few soft celebratory petals.
+function scatterBirthdayStickers() {
+  if (reduceMotion) return;
+  const stickers = ['🎂', '🎉', '🎈', '✨', '❤️', '✌🏻'];
+  for (let i = 0; i < 12; i += 1) {
+    const sticker = document.createElement('span');
+    sticker.className = 'sticker-shower-piece';
+    sticker.setAttribute('aria-hidden', 'true');
+    sticker.textContent = stickers[i % stickers.length];
+    sticker.style.left = `${Math.random() * 100}vw`;
+    sticker.style.setProperty('--sticker-size', `${Math.round(Math.random() * 13 + 17)}px`);
+    sticker.style.setProperty('--sticker-drift', `${Math.round(Math.random() * 180 - 90)}px`);
+    sticker.style.setProperty('--sticker-spin', `${Math.round(Math.random() * 300 - 150)}deg`);
+    sticker.style.setProperty('--sticker-duration', `${(Math.random() * 1.4 + 2.6).toFixed(2)}s`);
+    sticker.style.animationDelay = `${(Math.random() * .45).toFixed(2)}s`;
+    document.body.appendChild(sticker);
+    window.setTimeout(() => sticker.remove(), 4700);
+  }
+}
+
 function scatterPetals() {
   if (reduceMotion) return;
+  scatterBirthdayStickers();
   const pieces = 34;
   const colors = ['#f2c36e', '#d98c7f', '#66cbd0', '#f6e5c6', '#b97582'];
   for (let i = 0; i < pieces; i += 1) {
@@ -147,7 +167,7 @@ if ('IntersectionObserver' in window && memoryVideo) {
 }
 lightbox?.addEventListener('show', () => memoryVideo?.pause());
 
-// Optional background worship instrumental. It is deliberately user-initiated.
+// Birthday song. Playback remains user-initiated; there is no autoplay.
 const backgroundMusic = $('#backgroundMusic');
 const musicToggle = $('#musicToggle');
 const musicLabel = $('#musicLabel');
@@ -156,18 +176,18 @@ if (backgroundMusic && musicToggle) {
   const source = $('source', backgroundMusic);
   const probe = new Audio();
   probe.preload = 'metadata';
-  probe.src = source?.src || 'assets/audio/worship-instrumental.mp3';
+  probe.src = source?.src || 'assets/audio/happy-birthday-song.mp3';
   probe.addEventListener('canplay', () => {
     musicAvailable = true;
     musicToggle.disabled = false;
-    musicLabel.textContent = 'Play music';
-    musicToggle.setAttribute('aria-label', 'Play background worship instrumental');
+    musicLabel.textContent = 'Play birthday song';
+    musicToggle.setAttribute('aria-label', 'Play the birthday song');
   }, { once: true });
   probe.addEventListener('error', () => {
     musicAvailable = false;
     musicToggle.disabled = true;
-    musicLabel.textContent = 'Music soon';
-    musicToggle.title = 'Add your licensed worship-instrumental.mp3 file to assets/audio to enable music.';
+    musicLabel.textContent = 'Song unavailable';
+    musicToggle.title = 'The birthday song could not be loaded. Check assets/audio/happy-birthday-song.mp3.';
   }, { once: true });
   // Start a lightweight check only; no audio can play until the user presses the control.
   probe.load();
@@ -177,13 +197,13 @@ if (backgroundMusic && musicToggle) {
       if (backgroundMusic.paused) {
         await backgroundMusic.play();
         musicToggle.classList.add('is-playing');
-        musicLabel.textContent = 'Pause music';
-        musicToggle.setAttribute('aria-label', 'Pause background worship instrumental');
+        musicLabel.textContent = 'Pause song';
+        musicToggle.setAttribute('aria-label', 'Pause the birthday song');
       } else {
         backgroundMusic.pause();
         musicToggle.classList.remove('is-playing');
-        musicLabel.textContent = 'Play music';
-        musicToggle.setAttribute('aria-label', 'Play background worship instrumental');
+        musicLabel.textContent = 'Play birthday song';
+        musicToggle.setAttribute('aria-label', 'Play the birthday song');
       }
     } catch (error) {
       showToast('Your browser could not play that audio file.');
@@ -191,7 +211,7 @@ if (backgroundMusic && musicToggle) {
   });
   backgroundMusic.addEventListener('ended', () => {
     musicToggle.classList.remove('is-playing');
-    musicLabel.textContent = 'Play music';
+    musicLabel.textContent = 'Play birthday song';
   });
 }
 
