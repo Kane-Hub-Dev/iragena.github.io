@@ -172,25 +172,74 @@ const backgroundMusic = $('#backgroundMusic');
 const musicToggle = $('#musicToggle');
 const musicLabel = $('#musicLabel');
 let musicAvailable = false;
-if (backgroundMusic && musicToggle) {
+let birthdaySongObjectUrl = null;
+
+async function prepareBirthdaySong() {
   const source = $('source', backgroundMusic);
+  const directUrl = source?.src || new URL('assets/audio/happy-birthday-song.mp3', document.baseURI).href;
   const probe = new Audio();
   probe.preload = 'metadata';
-  probe.src = source?.src || 'assets/audio/happy-birthday-song.mp3';
-  probe.addEventListener('canplay', () => {
+  const directAvailable = await new Promise(resolve => {
+    let settled = false;
+    const finish = value => {
+      if (settled) return;
+      settled = true;
+      window.clearTimeout(timeout);
+      resolve(value);
+    };
+    const timeout = window.setTimeout(() => finish(false), 6500);
+    probe.addEventListener('canplay', () => finish(true), { once: true });
+    probe.addEventListener('error', () => finish(false), { once: true });
+    probe.src = directUrl;
+    probe.load();
+  });
+
+  if (directAvailable) {
+    backgroundMusic.src = directUrl;
+    return true;
+  }
+
+  // GitHub Pages can serve the song as small text chunks if the binary MP3
+  // is not present. Reassemble it locally into a playable audio Blob.
+  musicLabel.textContent = 'Loading birthday song…';
+  const partCount = 13;
+  const paths = Array.from({ length: partCount }, (_, index) => {
+    const number = String(index + 1).padStart(2, '0');
+    return `assets/audio/data/song-${number}.txt`;
+  });
+  const responses = await Promise.all(paths.map(path => fetch(path, { cache: 'force-cache' })));
+  const failed = responses.find(response => !response.ok);
+  if (failed) throw new Error(`Birthday song data could not be loaded (${failed.status}).`);
+
+  const encodedSong = (await Promise.all(responses.map(response => response.text()))).join('').trim();
+  if (!encodedSong || encodedSong.length % 4 !== 0) throw new Error('Birthday song data is incomplete.');
+  const binarySong = atob(encodedSong);
+  const songBytes = new Uint8Array(binarySong.length);
+  for (let index = 0; index < binarySong.length; index += 1) {
+    songBytes[index] = binarySong.charCodeAt(index);
+  }
+  birthdaySongObjectUrl = URL.createObjectURL(new Blob([songBytes], { type: 'audio/mpeg' }));
+  backgroundMusic.src = birthdaySongObjectUrl;
+  backgroundMusic.load();
+  return true;
+}
+
+if (backgroundMusic && musicToggle) {
+  musicToggle.disabled = true;
+  prepareBirthdaySong().then(() => {
     musicAvailable = true;
     musicToggle.disabled = false;
     musicLabel.textContent = 'Play birthday song';
     musicToggle.setAttribute('aria-label', 'Play the birthday song');
-  }, { once: true });
-  probe.addEventListener('error', () => {
+    musicToggle.title = 'Tap to play Dira’s birthday song.';
+  }).catch(error => {
     musicAvailable = false;
     musicToggle.disabled = true;
     musicLabel.textContent = 'Song unavailable';
-    musicToggle.title = 'The birthday song could not be loaded. Check assets/audio/happy-birthday-song.mp3.';
-  }, { once: true });
-  // Start a lightweight check only; no audio can play until the user presses the control.
-  probe.load();
+    musicToggle.title = 'The birthday song could not be loaded. Check the audio files.';
+    console.error(error);
+  });
+
   musicToggle.addEventListener('click', async () => {
     if (!musicAvailable) return;
     try {
@@ -212,7 +261,11 @@ if (backgroundMusic && musicToggle) {
   backgroundMusic.addEventListener('ended', () => {
     musicToggle.classList.remove('is-playing');
     musicLabel.textContent = 'Play birthday song';
+    musicToggle.setAttribute('aria-label', 'Play the birthday song');
   });
+  window.addEventListener('pagehide', () => {
+    if (birthdaySongObjectUrl) URL.revokeObjectURL(birthdaySongObjectUrl);
+  }, { once: true });
 }
 
 // Final surprise reveal
