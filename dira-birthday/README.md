@@ -10,7 +10,7 @@ A mobile-first, single-page birthday website dedicated to Ishimwe Diane (Dira). 
 - Supplied portrait MP4 video with native play/pause controls
 - Photo gallery with keyboard-accessible lightbox, previous/next controls and captions
 - Scroll reveal animations, reading progress indicator, mobile navigation and interactive birthday details
-- Optional background worship music control (no autoplay)
+- Supplied birthday song with a visitor-controlled play/pause button (no autoplay)
 - Reduced-motion and keyboard-focus support
 
 ## Project structure
@@ -32,6 +32,7 @@ Dira-Birthday/
     ├── videos/
     │   └── dira-memory-video.mp4
     └── audio/
+        ├── happy-birthday-song.mp3
         └── README.txt
 ```
 
@@ -45,15 +46,15 @@ python -m http.server 8000
 
 Then visit `http://localhost:8000`.
 
-## Add background music
+## Birthday song
 
-No music track is bundled because the site should only use music you own or have permission to publish. Add a licensed Gospel/worship instrumental as:
+This project package includes the supplied song at:
 
 ```text
-assets/audio/worship-instrumental.mp3
+assets/audio/happy-birthday-song.mp3
 ```
 
-The music button becomes available when the file is present. Playback starts only after the visitor presses the button; there is no autoplay.
+The GitHub page uses the same path. Upload this MP3 into `dira-birthday/assets/audio/` in the repository to enable the music button there. Playback starts only after the visitor presses the button; there is no autoplay. Before publishing the audio in a public repository, make sure you have permission to share it publicly.
 
 ## Publish in the existing GitHub Pages repository
 
