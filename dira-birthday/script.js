@@ -56,47 +56,16 @@ function showToast(message) {
   toastTimer = window.setTimeout(() => toast.classList.remove('show'), 2400);
 }
 
-// Open your gift: scroll to the letter and scatter a few soft celebratory petals.
-function scatterBirthdayStickers() {
-  if (reduceMotion) return;
-  const stickers = ['🎂', '🎉', '🎈', '✨', '❤️', '✌🏻'];
-  for (let i = 0; i < 12; i += 1) {
-    const sticker = document.createElement('span');
-    sticker.className = 'sticker-shower-piece';
-    sticker.setAttribute('aria-hidden', 'true');
-    sticker.textContent = stickers[i % stickers.length];
-    sticker.style.left = `${Math.random() * 100}vw`;
-    sticker.style.setProperty('--sticker-size', `${Math.round(Math.random() * 13 + 17)}px`);
-    sticker.style.setProperty('--sticker-drift', `${Math.round(Math.random() * 180 - 90)}px`);
-    sticker.style.setProperty('--sticker-spin', `${Math.round(Math.random() * 300 - 150)}deg`);
-    sticker.style.setProperty('--sticker-duration', `${(Math.random() * 1.4 + 2.6).toFixed(2)}s`);
-    sticker.style.animationDelay = `${(Math.random() * .45).toFixed(2)}s`;
-    document.body.appendChild(sticker);
-    window.setTimeout(() => sticker.remove(), 4700);
-  }
+// A quiet highlight replaces the old falling emoji/confetti effect.
+function highlightGift(targetSelector) {
+  const target = $(targetSelector);
+  if (!target) return;
+  target.classList.add('gift-highlight');
+  window.setTimeout(() => target.classList.remove('gift-highlight'), 1350);
 }
 
-function scatterPetals() {
-  if (reduceMotion) return;
-  scatterBirthdayStickers();
-  const pieces = 34;
-  const colors = ['#111111', '#444444', '#777777', '#aaaaaa', '#eeeeee'];
-  for (let i = 0; i < pieces; i += 1) {
-    const petal = document.createElement('span');
-    petal.className = 'confetti-piece';
-    petal.setAttribute('aria-hidden', 'true');
-    petal.style.left = `${Math.random() * 100}vw`;
-    petal.style.background = colors[i % colors.length];
-    petal.style.setProperty('--drift', `${Math.round(Math.random() * 170 - 85)}px`);
-    petal.style.setProperty('--spin', `${Math.round(Math.random() * 800 + 200)}deg`);
-    petal.style.setProperty('--fall-duration', `${(Math.random() * 1.8 + 2.6).toFixed(2)}s`);
-    petal.style.animationDelay = `${(Math.random() * .5).toFixed(2)}s`;
-    document.body.appendChild(petal);
-    window.setTimeout(() => petal.remove(), 5200);
-  }
-}
 $('#openGift')?.addEventListener('click', () => {
-  scatterPetals();
+  highlightGift('#letter .letter-card');
   $('#letter').scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
   showToast('A little gift, from my heart to yours. ♡');
 });
@@ -277,7 +246,7 @@ revealSurprise?.addEventListener('click', () => {
   surpriseMessage.hidden = isOpen;
   revealSurprise.querySelector('span:first-child').textContent = isOpen ? 'Reveal your surprise' : 'Close your surprise';
   if (!isOpen) {
-    scatterPetals();
+    highlightGift('#surpriseMessage .surprise-envelope');
     window.setTimeout(() => surpriseMessage.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' }), 80);
   }
 });
