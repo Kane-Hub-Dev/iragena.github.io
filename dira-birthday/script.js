@@ -80,7 +80,7 @@ function scatterPetals() {
   if (reduceMotion) return;
   scatterBirthdayStickers();
   const pieces = 34;
-  const colors = ['#f2c36e', '#d98c7f', '#66cbd0', '#f6e5c6', '#b97582'];
+  const colors = ['#111111', '#444444', '#777777', '#aaaaaa', '#eeeeee'];
   for (let i = 0; i < pieces; i += 1) {
     const petal = document.createElement('span');
     petal.className = 'confetti-piece';
