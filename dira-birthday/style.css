@@ -1085,3 +1085,296 @@ button:focus-visible, a:focus-visible { outline:2px solid var(--cyan); outline-o
 @media (prefers-reduced-motion:reduce) {
   *,*::before,*::after { animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
 }
+
+
+
+/* ===========================================================
+   FINAL DETAIL PASS — DIRA HALO + LARGE ICON MOTION
+   Additive only: no existing sections, words, media or layout
+   dimensions are changed.
+   =========================================================== */
+
+/* The empty prayer halo becomes a dedicated Dira signature. */
+.prayer-halo {
+  position: relative;
+  display: grid;
+  place-items: center;
+  isolation: isolate;
+  overflow: visible;
+  animation: diraHaloBreathe 6.5s ease-in-out infinite;
+}
+
+.prayer-halo::before {
+  content: "✦";
+  position: absolute;
+  left: 50%;
+  top: 27%;
+  transform: translateX(-50%);
+  color: var(--gold-bright);
+  font: 19px/1 var(--serif);
+  text-shadow: 0 0 18px rgba(242,195,110,.52);
+  animation: diraHaloStar 4.4s ease-in-out infinite;
+}
+
+.prayer-halo::after {
+  content: "Dira";
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding-top: 4px;
+  color: #FFF0D3;
+  font: italic 62px/.95 Georgia, "Times New Roman", serif;
+  letter-spacing: -.075em;
+  text-shadow:
+    0 2px 1px rgba(0,0,0,.20),
+    0 0 22px rgba(231,190,120,.34),
+    0 0 52px rgba(108,195,199,.16);
+  animation: diraNameGlow 5.2s ease-in-out infinite;
+}
+
+.prayer-art {
+  perspective: 900px;
+}
+.prayer-art > span {
+  transform-origin: center;
+  animation: prayerIconFloat 5.2s ease-in-out infinite;
+}
+.prayer-art > span:nth-of-type(2) { animation-delay: -.9s; }
+.prayer-art > span:nth-of-type(3) { animation-delay: -1.8s; }
+.prayer-art > span:nth-of-type(4) { animation-delay: -2.7s; }
+.prayer-art > span:nth-of-type(1) { animation: prayerStarTurn 8s ease-in-out infinite; }
+.prayer-art > span:nth-of-type(3) {
+  font-size: 42px;
+  text-shadow: 0 0 22px rgba(217,140,130,.35);
+}
+
+/* Larger, luminous icons in the existing quality cards. */
+.quality-icon {
+  font-size: 27px;
+  transform-origin: center;
+  animation: qualityIconFloat 4.8s ease-in-out infinite;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.10),
+    0 8px 20px rgba(0,0,0,.15),
+    0 0 0 0 rgba(231,190,120,0);
+}
+.quality-card:nth-child(2) .quality-icon { animation-delay: -.8s; }
+.quality-card:nth-child(3) .quality-icon { animation-delay: -1.6s; }
+.quality-card:nth-child(4) .quality-icon { animation-delay: -2.4s; }
+.quality-card:nth-child(5) .quality-icon { animation-delay: -3.2s; }
+.quality-card:hover .quality-icon {
+  animation-play-state: paused;
+  transform: translateY(-3px) rotate(-7deg) scale(1.08);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.15),
+    0 10px 24px rgba(0,0,0,.20),
+    0 0 0 6px rgba(231,190,120,.055);
+}
+
+/* Bigger wish symbols animate gently without moving the cards. */
+.wish-icon {
+  display: inline-block;
+  font-size: 30px;
+  line-height: 1;
+  transform-origin: center;
+  animation: wishIconDrift 5.6s ease-in-out infinite;
+  text-shadow: 0 0 16px rgba(231,190,120,.23);
+}
+.wish-card:nth-child(2n) .wish-icon { animation-delay: -1.4s; }
+.wish-card:nth-child(3n) .wish-icon { animation-delay: -2.8s; }
+.wish-card:hover .wish-icon {
+  animation-play-state: paused;
+  transform: translateY(-4px) scale(1.16) rotate(-8deg);
+}
+
+/* Scripture symbols become visible, animated chapter markers. */
+.verse-symbol {
+  display: inline-block;
+  font-size: 24px;
+  transform-origin: center;
+  animation: verseSymbolPulse 4.2s ease-in-out infinite;
+  text-shadow: 0 0 18px rgba(231,190,120,.25);
+}
+.verse-card:nth-child(2) .verse-symbol { animation-delay: -2.1s; }
+
+/* Hero ornaments: animated with slow, premium movement. */
+.portrait-spark {
+  animation: portraitSparkle 4s ease-in-out infinite;
+}
+.spark-b { animation-delay: -1.35s; }
+.spark-c { animation-delay: -2.7s; }
+
+.birthday-sticker-cake {
+  animation: stickerBob 5.6s ease-in-out infinite;
+}
+.birthday-sticker-love {
+  animation: stickerBob 6.2s ease-in-out infinite reverse;
+}
+.birthday-sticker-balloon {
+  animation: balloonFloat 5.3s ease-in-out infinite;
+}
+
+.brand-mark > i {
+  transform-origin: center;
+  animation: brandStarTurn 5s ease-in-out infinite;
+}
+.brand-mark > b {
+  animation: tinyHeartBeat 2.8s ease-in-out infinite;
+}
+
+.date-seal {
+  animation: dateSealFloat 6s ease-in-out infinite;
+}
+.floating-note {
+  animation: noteBob 6.4s ease-in-out infinite;
+}
+
+/* Main surprise icon and closing heart receive a more visible pulse. */
+.surprise-icon {
+  animation: surpriseIconOrbit 6s ease-in-out infinite;
+}
+.dedication-heart {
+  animation: dedicationHeartBeat 2.9s ease-in-out infinite;
+}
+.surprise-glow {
+  animation: surpriseGlow 7s ease-in-out infinite;
+}
+
+/* Add soft visual life to cards already on the page. */
+.quality-card,
+.verse-card,
+.wish-card,
+.letter-card,
+.prayer-card,
+.surprise-envelope {
+  transition:
+    transform .32s cubic-bezier(.2,.7,.2,1),
+    box-shadow .32s ease,
+    border-color .32s ease,
+    background-color .32s ease;
+}
+.verse-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 28px 64px rgba(0,0,0,.29), inset 0 1px 0 rgba(255,255,255,.07);
+}
+.letter-card:hover {
+  border-color: rgba(242,195,110,.38);
+  box-shadow: 0 29px 72px rgba(0,0,0,.31), inset 0 1px 0 rgba(255,255,255,.07);
+}
+.prayer-card:hover {
+  box-shadow: 0 34px 82px rgba(0,0,0,.34), inset 0 1px 0 rgba(255,255,255,.9);
+}
+.surprise-envelope:hover {
+  border-color: rgba(242,195,110,.49);
+  box-shadow: 0 32px 78px rgba(0,0,0,.34), inset 0 1px 0 rgba(255,255,255,.08);
+}
+
+/* Motion curves — decorative-only transforms; no layout dimensions change. */
+@keyframes diraHaloBreathe {
+  0%,100% {
+    transform: scale(1);
+    box-shadow:
+      0 0 0 18px rgba(242,195,110,.025),
+      0 0 0 44px rgba(102,203,208,.016),
+      inset 0 0 55px rgba(242,195,110,.06);
+  }
+  50% {
+    transform: scale(1.025);
+    box-shadow:
+      0 0 0 20px rgba(242,195,110,.045),
+      0 0 0 49px rgba(102,203,208,.028),
+      inset 0 0 68px rgba(242,195,110,.11);
+  }
+}
+@keyframes diraNameGlow {
+  0%,100% {
+    opacity: .88;
+    transform: scale(.98);
+    text-shadow: 0 2px 1px rgba(0,0,0,.20), 0 0 18px rgba(242,195,110,.25), 0 0 42px rgba(102,203,208,.12);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.035);
+    text-shadow: 0 2px 1px rgba(0,0,0,.18), 0 0 29px rgba(242,195,110,.48), 0 0 62px rgba(102,203,208,.22);
+  }
+}
+@keyframes diraHaloStar {
+  0%,100% { opacity: .55; transform: translateX(-50%) translateY(0) rotate(0) scale(.9); }
+  50% { opacity: 1; transform: translateX(-50%) translateY(-5px) rotate(24deg) scale(1.18); }
+}
+@keyframes prayerIconFloat {
+  0%,100% { translate: 0 0; rotate: 0deg; }
+  50% { translate: 0 -8px; rotate: 7deg; }
+}
+@keyframes prayerStarTurn {
+  0%,100% { transform: rotate(-10deg) scale(.94); opacity: .68; }
+  50% { transform: rotate(18deg) scale(1.16); opacity: 1; }
+}
+@keyframes qualityIconFloat {
+  0%,100% { translate: 0 0; rotate: 0deg; }
+  50% { translate: 0 -4px; rotate: 3deg; }
+}
+@keyframes wishIconDrift {
+  0%,100% { transform: translateY(0) rotate(-4deg) scale(1); }
+  50% { transform: translateY(-6px) rotate(5deg) scale(1.08); }
+}
+@keyframes verseSymbolPulse {
+  0%,100% { transform: rotate(0) scale(1); opacity: .82; }
+  50% { transform: rotate(24deg) scale(1.18); opacity: 1; }
+}
+@keyframes portraitSparkle {
+  0%,100% { opacity: .42; transform: scale(.84) rotate(-10deg); }
+  50% { opacity: 1; transform: scale(1.18) rotate(13deg); }
+}
+@keyframes brandStarTurn {
+  0%,100% { transform: rotate(-12deg) scale(.92); }
+  50% { transform: rotate(22deg) scale(1.12); }
+}
+@keyframes tinyHeartBeat {
+  0%,100% { transform: scale(1); }
+  8% { transform: scale(1.20); }
+  16% { transform: scale(1); }
+  24% { transform: scale(1.13); }
+  32% { transform: scale(1); }
+}
+@keyframes dateSealFloat {
+  0%,100% { translate: 0 0; rotate: 5deg; }
+  50% { translate: 0 -6px; rotate: 2deg; }
+}
+@keyframes dedicationHeartBeat {
+  0%,100% { transform: scale(1); }
+  12% { transform: scale(1.13); }
+  24% { transform: scale(1); }
+  36% { transform: scale(1.09); }
+  48% { transform: scale(1); }
+}
+@keyframes surpriseIconOrbit {
+  0%,100% { transform: translateY(0) rotate(-5deg) scale(1); }
+  50% { transform: translateY(-6px) rotate(8deg) scale(1.08); }
+}
+
+@media (max-width: 860px) {
+  .prayer-halo::after { font-size: clamp(42px, 11vw, 56px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .prayer-halo,
+  .prayer-halo::before,
+  .prayer-halo::after,
+  .prayer-art > span,
+  .quality-icon,
+  .wish-icon,
+  .verse-symbol,
+  .portrait-spark,
+  .birthday-sticker-cake,
+  .birthday-sticker-love,
+  .birthday-sticker-balloon,
+  .brand-mark > i,
+  .brand-mark > b,
+  .date-seal,
+  .floating-note,
+  .surprise-icon,
+  .dedication-heart {
+    animation: none !important;
+  }
+}
