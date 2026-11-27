@@ -56,15 +56,64 @@ function showToast(message) {
   toastTimer = window.setTimeout(() => toast.classList.remove('show'), 2400);
 }
 
-// A quiet highlight replaces the old falling emoji/confetti effect.
+// A short, anchored birthday burst: confetti and a few birthday emojis.
+function launchCelebration(source) {
+  if (reduceMotion) return;
+  const rect = source && source.getBoundingClientRect ? source.getBoundingClientRect() : {
+    left: window.innerWidth / 2, top: window.innerHeight / 2, width: 0, height: 0
+  };
+  const originX = rect.left + rect.width / 2;
+  const originY = rect.top + rect.height / 2;
+  const layer = document.createElement('div');
+  layer.className = 'celebration-layer';
+  layer.setAttribute('aria-hidden', 'true');
+  document.body.appendChild(layer);
+
+  const palette = ['#E7BE78', '#F7DCA9', '#D98C82', '#B97187', '#6CC3C7', '#F3E7D5'];
+  for (let i = 0; i < 34; i += 1) {
+    const piece = document.createElement('span');
+    const angle = (Math.PI * 2 * i) / 34 + (Math.random() - .5) * .24;
+    const distance = 70 + Math.random() * 145;
+    piece.className = 'celebration-confetti';
+    if (i % 3 === 1) piece.classList.add('is-circle');
+    if (i % 3 === 2) piece.classList.add('is-ribbon');
+    piece.style.left = originX + 'px';
+    piece.style.top = originY + 'px';
+    piece.style.background = palette[i % palette.length];
+    piece.style.setProperty('--dx', (Math.cos(angle) * distance) + 'px');
+    piece.style.setProperty('--dy', (Math.sin(angle) * distance - 45) + 'px');
+    piece.style.setProperty('--spin', Math.round(Math.random() * 620 - 310) + 'deg');
+    piece.style.animationDelay = (Math.random() * .12).toFixed(2) + 's';
+    layer.appendChild(piece);
+  }
+
+  const birthdayEmojis = ['🎂', '🎉', '🎈', '🎁', '💗', '✨'];
+  birthdayEmojis.forEach((emoji, index) => {
+    const sticker = document.createElement('span');
+    const angle = (Math.PI * 2 * index) / birthdayEmojis.length - Math.PI / 2;
+    sticker.className = 'celebration-emoji';
+    sticker.textContent = emoji;
+    sticker.style.left = originX + 'px';
+    sticker.style.top = originY + 'px';
+    sticker.style.setProperty('--dx', (Math.cos(angle) * 95) + 'px');
+    sticker.style.setProperty('--dy', (Math.sin(angle) * 80 - 28) + 'px');
+    sticker.style.setProperty('--spin', (index % 2 ? 12 : -12) + 'deg');
+    sticker.style.animationDelay = (index * .035).toFixed(2) + 's';
+    layer.appendChild(sticker);
+  });
+
+  window.setTimeout(() => layer.remove(), 2500);
+}
+
 function highlightGift(targetSelector) {
   const target = $(targetSelector);
   if (!target) return;
   target.classList.add('gift-highlight');
-  window.setTimeout(() => target.classList.remove('gift-highlight'), 1350);
+  window.setTimeout(() => target.classList.remove('gift-highlight'), 1450);
 }
 
 $('#openGift')?.addEventListener('click', () => {
+  launchCelebration($('#openGift'));
   highlightGift('#letter .letter-card');
   $('#letter').scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
   showToast('A little gift, from my heart to yours. ♡');
@@ -246,6 +295,7 @@ revealSurprise?.addEventListener('click', () => {
   surpriseMessage.hidden = isOpen;
   revealSurprise.querySelector('span:first-child').textContent = isOpen ? 'Reveal your surprise' : 'Close your surprise';
   if (!isOpen) {
+    launchCelebration(revealSurprise);
     highlightGift('#surpriseMessage .surprise-envelope');
     window.setTimeout(() => surpriseMessage.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' }), 80);
   }
