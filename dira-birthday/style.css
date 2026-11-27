@@ -565,3 +565,42 @@ img, video { max-width:100%; }
   .section-heading h2, .prayer-card h2 { font-size:clamp(35px,11vw,42px); }
   .hero-portrait { max-width:calc(100% - 60px); }
 }
+
+
+/* MONOCHROME REFINEMENT — clean white, black and restrained greys */
+:root {
+  color-scheme: light;
+  --night:#ffffff;
+  --night-2:#f5f5f5;
+  --panel:#ffffff;
+  --panel-soft:#f1f1f1;
+  --ink:#111111;
+  --muted:#454545;
+  --muted-2:#666666;
+  --gold:#222222;
+  --gold-bright:#000000;
+  --coral:#555555;
+  --rose:#777777;
+  --cyan:#333333;
+  --line:rgba(0,0,0,.14);
+  --line-cyan:rgba(0,0,0,.16);
+  --shadow:0 24px 65px rgba(0,0,0,.10);
+}
+body { color:#111; background:#fff; }
+.site-header,.mobile-nav { background:rgba(255,255,255,.96); border-color:rgba(0,0,0,.12); }
+.desktop-nav a,.mobile-nav a,.brand-copy strong,.brand-copy small,.music-button { color:#111; }
+.hero,.content-section,.section-shell { color:#111; }
+.intro-strip,.scripture-section,.letter-card,.quality-card,.verse-card,.prayer-card,.wish-card,.surprise-card,.personal-heart-note,.video-feature { color:#111; background:#f5f5f5; border-color:rgba(0,0,0,.13); }
+.button-primary { color:#fff; background:#111; border-color:#111; }
+.button-primary:hover { background:#333; }
+.text-link,.eyebrow,.hero-kicker,.hero-kicker-kiny,.quality-number,.verse-label,.gallery-hint,.gallery-heading h3,.letter-date,.letter-card-bottom,.prayer-footer,.scripture-source,.footer-bottom { color:#333; }
+.hero-portrait,.gallery-item,.video-frame { background:#e9e9e9; }
+.hero-portrait img,.gallery-item img { filter:none; }
+.gallery-overlay { background:linear-gradient(0deg,rgba(0,0,0,.72),transparent 70%); }
+.music-button,.menu-toggle,.lightbox-close,.lightbox-arrow { border-color:rgba(0,0,0,.2); background:#fff; color:#111; }
+.scroll-progress span { background:#111; }
+.video-feature { background:#f4f4f4; }
+.video-frame { background:#000; }
+.video-frame video { display:block; width:auto; max-width:min(100%,405px); height:auto; max-height:min(720px,80vh); aspect-ratio:9/16; object-fit:contain; background:#000; }
+@media (max-width:860px) { .video-frame video { width:auto; max-width:100%; height:auto; max-height:72vh; } }
+@media (prefers-color-scheme:dark) { :root { color-scheme:light; } }
