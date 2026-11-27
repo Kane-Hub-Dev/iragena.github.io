@@ -153,7 +153,6 @@ function showPhoto(index) {
   lightboxCount.textContent = `${String(activePhoto + 1).padStart(2, '0')} / ${String(galleryImages.length).padStart(2, '0')}`;
 }
 galleryItems.forEach(item => item.addEventListener('click', () => {
-  memoryVideo?.pause();
   previousFocus = document.activeElement;
   showPhoto(Number(item.dataset.galleryIndex));
   if (typeof lightbox.showModal === 'function') lightbox.showModal();
@@ -173,24 +172,13 @@ document.addEventListener('keydown', event => {
   if (event.key === 'ArrowLeft') showPhoto(activePhoto - 1);
 });
 
-// Pause video when it leaves view or when the lightbox opens.
-const memoryVideo = $('#memoryVideo');
-if ('IntersectionObserver' in window && memoryVideo) {
-  const videoObserver = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting && !memoryVideo.paused) memoryVideo.pause();
-    });
-  }, { threshold: 0.15 });
-  videoObserver.observe(memoryVideo);
-}
-lightbox?.addEventListener('show', () => memoryVideo?.pause());
-
 // Birthday song. Playback remains user-initiated; there is no autoplay.
 const backgroundMusic = $('#backgroundMusic');
 const musicToggle = $('#musicToggle');
 const musicLabel = $('#musicLabel');
 let musicAvailable = false;
 let birthdaySongObjectUrl = null;
+let giftPlaybackRequested = false;
 
 async function prepareBirthdaySong() {
   const source = $('source', backgroundMusic);
@@ -214,6 +202,7 @@ async function prepareBirthdaySong() {
 
   if (directAvailable) {
     backgroundMusic.src = directUrl;
+    backgroundMusic.load();
     return true;
   }
 
@@ -250,6 +239,7 @@ if (backgroundMusic && musicToggle) {
     musicLabel.textContent = 'Play birthday song';
     musicToggle.setAttribute('aria-label', 'Play the birthday song');
     musicToggle.title = 'Tap to play Dira’s birthday song.';
+    if (giftPlaybackRequested) startBirthdaySongFromGift();
   }).catch(error => {
     musicAvailable = false;
     musicToggle.disabled = true;
@@ -285,6 +275,77 @@ if (backgroundMusic && musicToggle) {
     if (birthdaySongObjectUrl) URL.revokeObjectURL(birthdaySongObjectUrl);
   }, { once: true });
 }
+
+// The special gift promise rotates gently while the card is on the page.
+const futureGiftCard = $('#futureGiftCard');
+const futureGiftPanel = $('#futureGiftPanel');
+const futureGiftReveal = $('#futureGiftReveal');
+const futureGiftActionLabel = $('#futureGiftActionLabel');
+const futureGiftRotatingLine = $('#futureGiftRotatingLine');
+
+const futureGiftMessages = [
+  'Something special is being prepared just for you.',
+  'Every little detail is being put together with care.',
+  'Your special gift will reach you no later than February 14, 2027.',
+  'Because someone as important as you deserves something beautiful.'
+];
+let futureGiftMessageIndex = 0;
+
+if (futureGiftRotatingLine) {
+  window.setInterval(() => {
+    if (document.hidden) return;
+    futureGiftRotatingLine.classList.add('is-changing');
+    window.setTimeout(() => {
+      futureGiftMessageIndex = (futureGiftMessageIndex + 1) % futureGiftMessages.length;
+      futureGiftRotatingLine.textContent = futureGiftMessages[futureGiftMessageIndex];
+      futureGiftRotatingLine.classList.remove('is-changing');
+    }, 240);
+  }, 3900);
+}
+
+function startBirthdaySongFromGift() {
+  if (!backgroundMusic) return;
+  giftPlaybackRequested = true;
+  try {
+    // Called directly from the user's card click so browser playback is user-initiated.
+    const playRequest = backgroundMusic.play();
+    if (playRequest && typeof playRequest.then === 'function') {
+      playRequest.then(() => {
+        musicToggle?.classList.add('is-playing');
+        if (musicLabel) musicLabel.textContent = 'Pause song';
+        musicToggle?.setAttribute('aria-label', 'Pause the birthday song');
+      }).catch(error => {
+        console.warn('Birthday song could not start yet:', error);
+        if (!musicAvailable) {
+          showToast('Your birthday song is getting ready. Please keep the page open.');
+        } else {
+          showToast('Tap “Play birthday song” if your browser blocked playback.');
+        }
+      });
+    }
+  } catch (error) {
+    console.warn('Birthday song playback error:', error);
+    showToast('The birthday song could not start in this browser.');
+  }
+}
+
+futureGiftCard?.addEventListener('click', () => {
+  const isOpen = futureGiftCard.getAttribute('aria-expanded') === 'true';
+  const willOpen = !isOpen;
+  futureGiftCard.setAttribute('aria-expanded', String(willOpen));
+  futureGiftCard.classList.toggle('is-open', willOpen);
+  if (futureGiftReveal) futureGiftReveal.hidden = !willOpen;
+  futureGiftPanel?.classList.toggle('is-open', willOpen);
+
+  if (willOpen) {
+    if (futureGiftActionLabel) futureGiftActionLabel.textContent = 'YOUR SPECIAL GIFT IS IN THE MAKING';
+    launchCelebration(futureGiftCard);
+    startBirthdaySongFromGift();
+    showToast('A special promise, just for you, Dira. ♥');
+  } else {
+    if (futureGiftActionLabel) futureGiftActionLabel.textContent = 'CLICK ON TO VIEW IT';
+  }
+});
 
 // Final surprise reveal
 const revealSurprise = $('#revealSurprise');
