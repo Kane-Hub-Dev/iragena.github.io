@@ -223,19 +223,49 @@
         </button>
       </div>
 
-      <div class="video-feature reveal">
-        <div class="video-frame">
-          <video id="memoryVideo" controls playsinline preload="metadata" poster="assets/images/dira-photo-03-orange-shirt.jpg">
-            <source src="assets/videos/dira-memory-video.mp4" type="video/mp4">
-            Your browser does not support HTML video. Please open this page in a modern browser.
-          </video>
-          <span class="video-corner-label">A LITTLE VIDEO MEMORY</span>
-        </div>
-        <div class="video-copy">
-          <span class="eyebrow">PRESS PLAY, DIRA</span>
-          <h3>A moment in motion.</h3>
-          <p>Some memories feel even more special when they move. I saved this little video here just for you.</p>
-          <div class="video-meta"><span><i class="meta-dot"></i> 15 seconds</span><span>Portrait video · With love</span></div>
+      <div class="future-gift-panel reveal" id="futureGiftPanel">
+        <button class="future-gift-card" id="futureGiftCard" type="button" aria-expanded="false" aria-controls="futureGiftReveal">
+          <span class="future-gift-decoration future-gift-decoration-one" aria-hidden="true">✦</span>
+          <span class="future-gift-decoration future-gift-decoration-two" aria-hidden="true">♡</span>
+          <span class="future-gift-art" aria-hidden="true">
+            <svg viewBox="0 0 120 120" role="presentation">
+              <defs>
+                <linearGradient id="giftBoxGold" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#F7D991"/>
+                  <stop offset="1" stop-color="#DDAA59"/>
+                </linearGradient>
+                <linearGradient id="giftBoxRose" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#E88BA3"/>
+                  <stop offset="1" stop-color="#B85C7B"/>
+                </linearGradient>
+              </defs>
+              <ellipse cx="60" cy="105" rx="39" ry="7" fill="#101114" opacity=".12"/>
+              <rect x="23" y="48" width="74" height="52" rx="8" fill="url(#giftBoxRose)" stroke="#17191D" stroke-width="3"/>
+              <path d="M54 49h12v50H54z" fill="url(#giftBoxGold)"/>
+              <rect x="17" y="39" width="86" height="17" rx="5" fill="url(#giftBoxGold)" stroke="#17191D" stroke-width="3"/>
+              <path d="M60 39C37 35 29 20 39 15c11-5 21 9 21 24Z" fill="url(#giftBoxRose)" stroke="#17191D" stroke-width="2.5"/>
+              <path d="M60 39c23-4 31-19 21-24-11-5-21 9-21 24Z" fill="url(#giftBoxRose)" stroke="#17191D" stroke-width="2.5"/>
+              <path d="M60 37v15" stroke="#17191D" stroke-width="2.5" stroke-linecap="round"/>
+              <path d="M34 65h9m-9 9h9m34-9h9m-9 9h9" stroke="#FFF4DF" stroke-width="2" stroke-linecap="round" opacity=".85"/>
+            </svg>
+          </span>
+          <span class="future-gift-copy">
+            <span class="future-gift-eyebrow">A LITTLE PROMISE, MADE WITH LOVE</span>
+            <strong class="future-gift-title">GREAT GIFT</strong>
+            <span class="future-gift-cta"><span id="futureGiftActionLabel">CLICK ON TO VIEW IT</span><span class="future-gift-cta-arrow" aria-hidden="true">↗</span></span>
+            <span class="future-gift-rotating-line" id="futureGiftRotatingLine" aria-live="polite">Something special is being prepared just for you.</span>
+          </span>
+          <span class="future-gift-side-mark" aria-hidden="true">♡</span>
+        </button>
+        <div class="future-gift-reveal" id="futureGiftReveal" hidden>
+          <span class="future-gift-reveal-kicker"><span aria-hidden="true">✦</span> JUST FOR YOU, DIRA <span aria-hidden="true">✦</span></span>
+          <p class="future-gift-reveal-message">I'm preparing a very special gift for you. I'm putting it together with care because you are someone important to me, and I want it to feel as special as you are.</p>
+          <div class="future-gift-deadline">
+            <span class="future-gift-calendar-icon" aria-hidden="true">♡</span>
+            <span class="future-gift-deadline-copy"><small>MY PROMISE TO YOU</small><strong>NO LATER THAN FEBRUARY 14, 2027</strong><em>VALENTINE'S DAY</em></span>
+            <span class="future-gift-deadline-spark" aria-hidden="true">✧</span>
+          </div>
+          <p class="future-gift-reveal-foot">A little surprise is on its way. Until then, keep this promise close to your heart. <span aria-hidden="true">♥</span></p>
         </div>
       </div>
     </section>
@@ -309,7 +339,7 @@
     <button class="lightbox-arrow lightbox-next" id="lightboxNext" type="button" aria-label="Next photo">›</button>
   </dialog>
 
-  <audio id="backgroundMusic" preload="none" loop>
+  <audio id="backgroundMusic" preload="auto" loop>
     <source src="assets/audio/happy-birthday-song.mp3" type="audio/mpeg">
   </audio>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
