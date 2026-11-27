@@ -1413,8 +1413,7 @@ button:focus-visible, a:focus-visible {
   font: 15px/1.6 Georgia, "Times New Roman", serif;
 }
 
-.bl
-essing-button-wrap { margin-top: 34px; }
+.blessing-button-wrap { margin-top: 34px; }
 .button-outline {
   color: var(--forest);
   border: 1px solid var(--forest);
